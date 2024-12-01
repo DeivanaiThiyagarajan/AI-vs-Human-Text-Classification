@@ -34,9 +34,9 @@ class TextDetector:
         # Initialize your machine learning model here
         # Get the list of stopwords
         self.stop_words = set(stopwords.words('english'))
-        self.model = self.load()
+        self.model = self.load_model()
 
-    def load(self):
+    def load_model(self):
         with open(r"model.pkl", "rb") as model_file:
             model = pkl.load(model_file)
 
@@ -99,19 +99,20 @@ class TextDetector:
 
     def predict(self, text):
         # Dummy logic for now - replace with actual ML model prediction
-        if "AI" in text:
-            return "This text is likely written by AI."
-        else:
-            return "This text is likely written by a human."
-
-        # input_df = self.compose_input_df(text)
-        # print(input_df)
-        #
-        # input_predictions = self.model.predict(input_df)
-        #
-        # if input_predictions == 0:
+        # if "AI" in text:
         #     return "This text is likely written by AI."
         # else:
         #     return "This text is likely written by a human."
 
+        input_df = self.compose_input_df(text)
+        print(input_df)
 
+        X = input_df.iloc[:, 2:]
+        X = X.loc[:, X.columns != 'tokens']
+
+        input_predictions = self.model.predict(X)
+
+        if input_predictions[0] == 0:
+            return "This text is likely written by a human."
+        else:
+            return "This text is likely written by AI."
