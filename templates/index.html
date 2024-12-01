@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI vs Human Text Detector</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .card {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">AI vs Human Text Detector</h3>
+                <form id="textForm">
+                    <div class="form-group">
+                        <label for="inputText">Enter your text below:</label>
+                        <textarea class="form-control" id="inputText" rows="6" placeholder="Type your text here..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Analyze Text</button>
+                </form>
+                <div id="result" class="alert alert-info mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#textForm').on('submit', function(event) {
+                event.preventDefault();
+                const inputText = $('#inputText').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',
+                    data: { inputText: inputText },
+                    success: function(response) {
+                        $('#result').text(response.result).show();
+                    },
+                    error: function() {
+                        $('#result').text('An error occurred. Please try again.').show();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
