@@ -44,12 +44,12 @@
                 $.ajax({
                     type: 'POST',
                     url: '/predict',
-                    data: { inputText: inputText },
+                    data: { inputText: $('#inputText').val() },
                     success: function(response) {
-                        $('#result').text(response.result).show();
+                        $('#result').html(`<h3>${response.result}</h3>`).show();
                     },
-                    error: function() {
-                        $('#result').text('An error occurred. Please try again.').show();
+                    error: function(error) {
+                        $('#result').html(`<h3>An error occurred. Please try again.</h3>`).show();
                     }
                 });
             });
