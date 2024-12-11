@@ -1,0 +1,4 @@
+#ignore all pickle files and pdf files
+*.pfd
+*.pickle
+*.pkl

@@ -19,12 +19,15 @@ from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from nltk.tokenize import word_tokenize
 from nltk.tokenize import sent_tokenize, word_tokenize
+import os
 
 
 app = Flask(__name__)
 
-model = pkl.load(open('C:/Users/Aishu/Downloads/Programming in python assignments/Projects/Term project/Saved models/LogisticRegressionClassifier.pkl', 'rb'))
-        
+model_path = os.path.join(os.path.dirname(__file__),'LogisticRegressionClassifier.pkl')   
+
+with open(model_path, "rb") as f:
+    model = pkl.load(f)     
 
 @app.route('/')
 def index():
